@@ -1,10 +1,12 @@
+import 'dart:ui';
+
 import 'package:bhagwat_gita/config/responsive/size_config.dart';
 import 'package:bhagwat_gita/features/home/screen/home_page.dart';
-import 'package:bhagwat_gita/features/home/widgets/chapter_card.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,10 +15,10 @@ void main() {
 
 Color brandColor = const Color(0xffffff9f);
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? dark) {
         ColorScheme lightColorScheme;
@@ -41,11 +43,37 @@ class MyApp extends StatelessWidget {
                   builder: (context, orientation) {
                     SizeConfig().init(constraints, orientation);
                     return MaterialApp(
-                      debugShowCheckedModeBanner: false,
-                      theme: ThemeData(useMaterial3: true,colorScheme: lightColorScheme),
-                      darkTheme: ThemeData(useMaterial3: true,colorScheme: darkColorScheme),
-                      home: const HomePage(),
-                    );
+                        debugShowCheckedModeBanner: false,
+                        theme: ThemeData(
+                          useMaterial3: true,
+                          colorScheme: lightColorScheme,
+                        ),
+                        darkTheme: ThemeData(
+                            useMaterial3: true, colorScheme: darkColorScheme),
+                        home: Scaffold(
+                          appBar: AppBar(
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            centerTitle: true,
+                            flexibleSpace: ClipRect(
+                              child: BackdropFilter(
+                                filter:
+                                    ImageFilter.blur(sigmaX: 17, sigmaY: 17),
+                                child: Container(
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                            ),
+                            title: Text(
+                              'Bhagavad Gita Chapters',
+                              style: GoogleFonts.lato(
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                          body: const HomePage(),
+                        ));
                   },
                 );
               },
