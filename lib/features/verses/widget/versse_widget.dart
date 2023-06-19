@@ -65,7 +65,7 @@ class ShlokaCard extends StatelessWidget {
                                       fontSize:
                                           12.0 * SizeConfig.textMultiplier!,
                                       fontWeight: FontWeight.w500,
-                                      color: Theme.of(context).highlightColor),
+                                      color: Theme.of(context).focusColor),
                                 ),
                                 const Divider(),
                               ],

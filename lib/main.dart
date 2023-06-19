@@ -17,8 +17,10 @@ Color brandColor = const Color(0xffffff9f);
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final GlobalKey<ScaffoldState> _key = GlobalKey();
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? dark) {
         ColorScheme lightColorScheme;
@@ -48,13 +50,18 @@ class MyApp extends ConsumerWidget {
                           useMaterial3: true,
                           colorScheme: lightColorScheme,
                         ),
-                        darkTheme: ThemeData(
-                            useMaterial3: true, colorScheme: darkColorScheme),
                         home: Scaffold(
+                          key: _key,
+                          drawer: const Drawer(),
                           appBar: AppBar(
                             backgroundColor: Colors.transparent,
                             elevation: 0,
                             centerTitle: true,
+                            leading: IconButton(
+                                onPressed: () {
+                                  _key.currentState?.openDrawer();
+                                },
+                                icon: const Icon(Icons.menu)),
                             flexibleSpace: ClipRect(
                               child: BackdropFilter(
                                 filter:

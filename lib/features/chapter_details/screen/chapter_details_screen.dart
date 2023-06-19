@@ -1,8 +1,7 @@
-import 'dart:developer';
+
 import 'dart:ui';
 
 import 'package:bhagwat_gita/config/responsive/size_config.dart';
-import 'package:bhagwat_gita/features/chapter_details/controller/text_size_controller.dart';
 import 'package:bhagwat_gita/features/text_to_speech/controller/text_to_speech_controller.dart';
 import 'package:bhagwat_gita/features/verses/controller/verse_from_chapters_controller.dart';
 import 'package:bhagwat_gita/features/verses/screen/chapter_verse_screen.dart';
@@ -44,7 +43,6 @@ class _ChaptersDetailsScreenState extends ConsumerState<ChaptersDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(textToSpeechProvider);
-    final adjustSize = ref.watch(textAdjustProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -53,11 +51,6 @@ class _ChaptersDetailsScreenState extends ConsumerState<ChaptersDetailsScreen> {
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: SizedBox(
             child:
-                // Slider(
-                //     value: adjustSize,
-                //     onChanged: (value) {
-                //       ref.read(textAdjustProvider.notifier).adjustTextSize(value);
-                //     })
                 Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
