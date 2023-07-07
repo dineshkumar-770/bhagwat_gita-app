@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:bhagwat_gita/config/responsive/size_config.dart';
+import 'package:bhagwat_gita/config/shared_prefs.dart';
 import 'package:bhagwat_gita/features/home/screen/home_page.dart';
+import 'package:bhagwat_gita/features/text_adjustment/widgets/drawer_widget.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferencesSingleton.init();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -20,10 +23,11 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalKey<ScaffoldState> _key = GlobalKey();
+    final GlobalKey<ScaffoldState> key = GlobalKey();
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? dark) {
         ColorScheme lightColorScheme;
+        // ignore: unused_local_variable
         ColorScheme darkColorScheme;
 
         if (lightDynamic != null && dark != null) {
@@ -51,15 +55,18 @@ class MyApp extends ConsumerWidget {
                           colorScheme: lightColorScheme,
                         ),
                         home: Scaffold(
-                          key: _key,
-                          drawer: const Drawer(),
+                          key: key,
+                          drawer: const Drawer(
+                            elevation: 2,
+                            child: DrawerWidget(),
+                          ),
                           appBar: AppBar(
                             backgroundColor: Colors.transparent,
                             elevation: 0,
                             centerTitle: true,
                             leading: IconButton(
                                 onPressed: () {
-                                  _key.currentState?.openDrawer();
+                                  key.currentState?.openDrawer();
                                 },
                                 icon: const Icon(Icons.menu)),
                             flexibleSpace: ClipRect(

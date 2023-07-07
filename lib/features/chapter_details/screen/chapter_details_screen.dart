@@ -1,4 +1,3 @@
-
 import 'dart:ui';
 
 import 'package:bhagwat_gita/config/responsive/size_config.dart';
@@ -50,37 +49,27 @@ class _ChaptersDetailsScreenState extends ConsumerState<ChaptersDetailsScreen> {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: SizedBox(
-            child:
-                Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                    onPressed: () {
-                      ref
-                          .read(chapterVerseProvider.notifier)
-                          .fetchChaptersVerse(widget.chapterNumber);
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => ChapterVerseScreen(
-                                chapterNumber: widget.chapterNumber),
-                          ));
-                    },
-                    child: Text(
-                      'Read All Verse(Total:- ${widget.totalVerse})',
-                      style: GoogleFonts.lato(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    )),
-                Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {}, icon: const Icon(Icons.bookmark_add)),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
-                  ],
-                )
-              ],
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: TextButton(
+                  onPressed: () {
+                    ref
+                        .read(chapterVerseProvider.notifier)
+                        .fetchChaptersVerse(widget.chapterNumber);
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => ChapterVerseScreen(
+                              chapterNumber: widget.chapterNumber),
+                        ));
+                  },
+                  child: Text(
+                    'Read All Verse(Total:- ${widget.totalVerse})',
+                    style: GoogleFonts.lato(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  )),
             ),
           ),
         ),

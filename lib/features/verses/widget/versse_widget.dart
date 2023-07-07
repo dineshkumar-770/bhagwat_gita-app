@@ -76,7 +76,7 @@ class ShlokaCard extends StatelessWidget {
                       width: double.maxFinite,
                       child: ElevatedButton(
                         onPressed: onCommentries,
-                        child: const Text('कमेंट्री पर जाएं'),
+                        child: const Text('Go to Commentries'),
                       ),
                     ),
                     SizedBox(height: 20.0 * SizeConfig.heightMultiplier!),
