@@ -141,23 +141,23 @@ class _ChaptersDetailsScreenState extends ConsumerState<ChaptersDetailsScreen> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  IconButton(
-                      onPressed: () {
-                        if (state.speakingHindi) {
-                        } else if (state.speakingEnglish) {
-                          ref.read(textToSpeechProvider.notifier).stop();
-                        } else {
-                          ref
-                              .read(textToSpeechProvider.notifier)
-                              .speakEnglish(text: widget.englishPara);
-                        }
-                      },
-                      icon: state.speakingEnglish
-                          ? const Icon(
-                              Icons.stop,
-                              color: Colors.red,
-                            )
-                          : const Icon(Icons.volume_up)),
+                  // IconButton(
+                  //     onPressed: () {
+                  //       if (state.speakingHindi) {
+                  //       } else if (state.speakingEnglish) {
+                  //         ref.read(textToSpeechProvider.notifier).stop();
+                  //       } else {
+                  //         ref
+                  //             .read(textToSpeechProvider.notifier)
+                  //             .speakEnglish(text: widget.englishPara);
+                  //       }
+                  //     },
+                  //     icon: state.speakingEnglish
+                  //         ? const Icon(
+                  //             Icons.stop,
+                  //             color: Colors.red,
+                  //           )
+                  //         : const Icon(Icons.volume_up)),
                 ],
               ),
               SizedBox(
@@ -226,23 +226,23 @@ class _ChaptersDetailsScreenState extends ConsumerState<ChaptersDetailsScreen> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  IconButton(
-                      onPressed: () {
-                        if (state.speakingEnglish) {
-                        } else if (state.speakingHindi) {
-                          ref.read(textToSpeechProvider.notifier).stop();
-                        } else {
-                          ref.read(textToSpeechProvider.notifier).speakHindi(
-                                text: widget.hindiPara,
-                              );
-                        }
-                      },
-                      icon: state.speakingHindi
-                          ? const Icon(
-                              Icons.stop,
-                              color: Colors.red,
-                            )
-                          : const Icon(Icons.volume_up)),
+                  // IconButton(
+                  //     onPressed: () {
+                  //       if (state.speakingEnglish) {
+                  //       } else if (state.speakingHindi) {
+                  //         ref.read(textToSpeechProvider.notifier).stop();
+                  //       } else {
+                  //         ref.read(textToSpeechProvider.notifier).speakHindi(
+                  //               text: widget.hindiPara,
+                  //             );
+                  //       }
+                  //     },
+                  //     icon: state.speakingHindi
+                  //         ? const Icon(
+                  //             Icons.stop,
+                  //             color: Colors.red,
+                  //           )
+                  //         : const Icon(Icons.volume_up)),
                 ],
               ),
               SizedBox(
