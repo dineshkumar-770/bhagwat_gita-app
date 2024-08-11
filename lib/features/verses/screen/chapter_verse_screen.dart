@@ -16,18 +16,19 @@ class ChapterVerseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xfff4f1f8),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        flexibleSpace: ClipRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 17, sigmaY: 17),
-            child: Container(
-              color: Colors.transparent,
-            ),
-          ),
-        ),
+        // flexibleSpace: ClipRect(
+        //   child: BackdropFilter(
+        //     filter: ImageFilter.blur(sigmaX: 17, sigmaY: 17),
+        //     child: Container(
+        //       color: Colors.transparent,
+        //     ),
+        //   ),
+        // ),
         title: Text(
           'Chapter $chapterNumber Verse',
           style: GoogleFonts.lato(
@@ -58,8 +59,7 @@ class ChapterVerseScreen extends StatelessWidget {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => CommentriesScreen(
-                                  listOfCommentary: state
-                                      .chapterVerseList[index].commentaries,
+                                  listOfCommentary: state.chapterVerseList[index].commentaries,
                                   chapterNumber: chapterNumber),
                             ));
                       },

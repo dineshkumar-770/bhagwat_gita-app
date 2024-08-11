@@ -13,7 +13,7 @@ void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-Color brandColor = const Color(0xffffff9f);
+Color brandColor = Colors.amber;
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});

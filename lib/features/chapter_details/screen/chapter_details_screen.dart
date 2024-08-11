@@ -1,8 +1,6 @@
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:bhagwat_gita/config/responsive/size_config.dart';
-import 'package:bhagwat_gita/features/chapter_details/controller/text_size_controller.dart';
 import 'package:bhagwat_gita/features/text_to_speech/controller/text_to_speech_controller.dart';
 import 'package:bhagwat_gita/features/verses/controller/verse_from_chapters_controller.dart';
 import 'package:bhagwat_gita/features/verses/screen/chapter_verse_screen.dart';
@@ -30,8 +28,7 @@ class ChaptersDetailsScreen extends ConsumerStatefulWidget {
   final int totalVerse;
 
   @override
-  ConsumerState<ChaptersDetailsScreen> createState() =>
-      _ChaptersDetailsScreenState();
+  ConsumerState<ChaptersDetailsScreen> createState() => _ChaptersDetailsScreenState();
 }
 
 class _ChaptersDetailsScreenState extends ConsumerState<ChaptersDetailsScreen> {
@@ -43,47 +40,37 @@ class _ChaptersDetailsScreenState extends ConsumerState<ChaptersDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(textToSpeechProvider);
-    final adjustSize = ref.watch(textAdjustProvider);
     return Scaffold(
+      backgroundColor: const Color(0xfff4f1f8),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xfff4f1f8),
         elevation: 0,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: SizedBox(
-            child:
-                // Slider(
-                //     value: adjustSize,
-                //     onChanged: (value) {
-                //       ref.read(textAdjustProvider.notifier).adjustTextSize(value);
-                //     })
-                Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
                     onPressed: () {
-                      ref
-                          .read(chapterVerseProvider.notifier)
-                          .fetchChaptersVerse(widget.chapterNumber);
+                      ref.read(chapterVerseProvider.notifier).fetchChaptersVerse(widget.chapterNumber);
                       Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => ChapterVerseScreen(
-                                chapterNumber: widget.chapterNumber),
+                            builder: (context) => ChapterVerseScreen(chapterNumber: widget.chapterNumber),
                           ));
                     },
                     child: Text(
                       'Read All Verse(Total:- ${widget.totalVerse})',
                       style: GoogleFonts.lato(
                         fontSize: 15.0,
+                        color: Colors.blue,
                         fontWeight: FontWeight.w700,
                       ),
                     )),
                 Row(
                   children: [
-                    IconButton(
-                        onPressed: () {}, icon: const Icon(Icons.bookmark_add)),
+                    IconButton(onPressed: () {}, icon: const Icon(Icons.bookmark_add)),
                     IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
                   ],
                 )
@@ -112,8 +99,7 @@ class _ChaptersDetailsScreenState extends ConsumerState<ChaptersDetailsScreen> {
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: 12 * SizeConfig.widthMultiplier!,
-              vertical: 12 * SizeConfig.heightMultiplier!),
+              horizontal: 12 * SizeConfig.widthMultiplier!, vertical: 12 * SizeConfig.heightMultiplier!),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

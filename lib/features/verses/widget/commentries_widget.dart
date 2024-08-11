@@ -3,11 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CommentriesWidget extends StatelessWidget {
-  const CommentriesWidget(
-      {super.key,
-      required this.authorName,
-      required this.langauge,
-      required this.description});
+  const CommentriesWidget({super.key, required this.authorName, required this.langauge, required this.description});
   final String authorName;
   final String langauge;
   final String description;
@@ -15,15 +11,15 @@ class CommentriesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: const Color(0xfff4f1f8),
       margin: EdgeInsets.symmetric(
-          horizontal: 10.0 * SizeConfig.widthMultiplier!,
-          vertical: 6.0 * SizeConfig.heightMultiplier!),
+          horizontal: 10.0 * SizeConfig.widthMultiplier!, vertical: 6.0 * SizeConfig.heightMultiplier!),
       child: Card(
-        elevation: 4.0,
+        elevation: 2.0,
+        color: const Color(0xfff4f1f8),
         child: Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: 20.0 * SizeConfig.widthMultiplier!,
-              vertical: 10.0 * SizeConfig.heightMultiplier!),
+              horizontal: 20.0 * SizeConfig.widthMultiplier!, vertical: 10.0 * SizeConfig.heightMultiplier!),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

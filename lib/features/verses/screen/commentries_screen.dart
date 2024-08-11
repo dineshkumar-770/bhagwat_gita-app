@@ -6,26 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CommentriesScreen extends StatelessWidget {
-  const CommentriesScreen(
-      {super.key, required this.chapterNumber, required this.listOfCommentary});
+  const CommentriesScreen({super.key, required this.chapterNumber, required this.listOfCommentary});
   final int chapterNumber;
   final List<Commentary> listOfCommentary;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xfff4f1f8),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xfff4f1f8),
         elevation: 0,
         centerTitle: true,
-        flexibleSpace: ClipRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 17, sigmaY: 17),
-            child: Container(
-              color: Colors.transparent,
-            ),
-          ),
-        ),
         title: Text(
           'Chapter $chapterNumber Commentries',
           style: GoogleFonts.lato(
@@ -41,10 +33,7 @@ class CommentriesScreen extends StatelessWidget {
             itemCount: listOfCommentary.length,
             itemBuilder: (context, index) {
               return CommentriesWidget(
-                authorName: listOfCommentary[index]
-                    .authorName
-                    .name
-                    .replaceAll(RegExp(r'_'), ' '),
+                authorName: listOfCommentary[index].authorName.name.replaceAll(RegExp(r'_'), ' '),
                 description: listOfCommentary[index].description,
                 langauge: listOfCommentary[index].language.name,
               );
