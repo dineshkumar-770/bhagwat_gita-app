@@ -1,12 +1,11 @@
-import 'dart:ui';
-
 import 'package:bhagwat_gita/config/responsive/size_config.dart';
-import 'package:bhagwat_gita/features/text_to_speech/controller/text_to_speech_controller.dart';
+import 'package:bhagwat_gita/constants/app_colors.dart';
 import 'package:bhagwat_gita/features/verses/controller/verse_from_chapters_controller.dart';
 import 'package:bhagwat_gita/features/verses/screen/chapter_verse_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ChaptersDetailsScreen extends ConsumerStatefulWidget {
@@ -33,65 +32,54 @@ class ChaptersDetailsScreen extends ConsumerStatefulWidget {
 
 class _ChaptersDetailsScreenState extends ConsumerState<ChaptersDetailsScreen> {
   @override
-  void dispose() {
-    ref.read(textToSpeechProvider.notifier).stop();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xfff4f1f8),
+      backgroundColor: AppColors.backgroundColor,
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16),
+        child: ElevatedButton.icon(
+          style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(AppColors.primaryButtonColor)),
+          onPressed: () {
+            ref.watch(chapterVerseProvider.notifier).fetchChaptersVerse(widget.chapterNumber);
+            Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => ChapterVerseScreen(chapterNumber: widget.chapterNumber),
+                ));
+          },
+          icon: Icon(
+            Icons.book,
+            color: AppColors.textColor1,
+          ),
+          label: Text(
+            "Read Verse",
+            style: GoogleFonts.lato(
+              fontSize: 14.0.sp,
+              color: AppColors.textColor1,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
       appBar: AppBar(
-        backgroundColor: const Color(0xfff4f1f8),
+        backgroundColor: AppColors.backgroundColor,
         elevation: 0,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: SizedBox(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                    onPressed: () {
-                      ref.read(chapterVerseProvider.notifier).fetchChaptersVerse(widget.chapterNumber);
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => ChapterVerseScreen(chapterNumber: widget.chapterNumber),
-                          ));
-                    },
-                    child: Text(
-                      'Read All Verse(Total:- ${widget.totalVerse})',
-                      style: GoogleFonts.lato(
-                        fontSize: 15.0,
-                        color: Colors.blue,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    )),
-                Row(
-                  children: [
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.bookmark_add)),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: AppColors.textColor1,
+            )),
         centerTitle: true,
-        flexibleSpace: ClipRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 17, sigmaY: 17),
-            child: Container(
-              color: Colors.transparent,
-            ),
-          ),
-        ),
         title: Text(
-          'Chapter ${widget.chapterNumber}',
+          widget.chapterTitle,
           style: GoogleFonts.lato(
-            fontSize: 24.0,
-            fontWeight: FontWeight.w300,
+            fontSize: 27.0,
+            color: AppColors.textColor1,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
@@ -99,53 +87,11 @@ class _ChaptersDetailsScreenState extends ConsumerState<ChaptersDetailsScreen> {
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: 12 * SizeConfig.widthMultiplier!, vertical: 12 * SizeConfig.heightMultiplier!),
+              horizontal: 16 * SizeConfig.widthMultiplier!, vertical: 16 * SizeConfig.heightMultiplier!),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  widget.chapterTitle,
-                  style: GoogleFonts.lato(
-                    fontSize: 27.0,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 5 * SizeConfig.heightMultiplier!,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'English:',
-                    style: GoogleFonts.lato(
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  // IconButton(
-                  //     onPressed: () {
-                  //       if (state.speakingHindi) {
-                  //       } else if (state.speakingEnglish) {
-                  //         ref.read(textToSpeechProvider.notifier).stop();
-                  //       } else {
-                  //         ref
-                  //             .read(textToSpeechProvider.notifier)
-                  //             .speakEnglish(text: widget.englishPara);
-                  //       }
-                  //     },
-                  //     icon: state.speakingEnglish
-                  //         ? const Icon(
-                  //             Icons.stop,
-                  //             color: Colors.red,
-                  //           )
-                  //         : const Icon(Icons.volume_up)),
-                ],
-              ),
               SizedBox(
                 height: 4 * SizeConfig.heightMultiplier!,
               ),
@@ -159,6 +105,7 @@ class _ChaptersDetailsScreenState extends ConsumerState<ChaptersDetailsScreen> {
                       'Meaning:  ',
                       style: GoogleFonts.lato(
                         fontSize: 16.0,
+                        color: AppColors.textColor1,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -167,6 +114,7 @@ class _ChaptersDetailsScreenState extends ConsumerState<ChaptersDetailsScreen> {
                         widget.chapterMeaning,
                         style: GoogleFonts.lato(
                           fontSize: 16.0,
+                          color: AppColors.textColor1,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -180,7 +128,8 @@ class _ChaptersDetailsScreenState extends ConsumerState<ChaptersDetailsScreen> {
               Text(
                 widget.englishPara,
                 style: GoogleFonts.lato(
-                  fontSize: 16.0,
+                  fontSize: 16.0.sp,
+                  color: AppColors.textColor1,
                   fontWeight: FontWeight.w400,
                 ),
                 textAlign: TextAlign.justify,
@@ -194,50 +143,20 @@ class _ChaptersDetailsScreenState extends ConsumerState<ChaptersDetailsScreen> {
                 child: Text(
                   widget.chapterTitleHindi,
                   style: GoogleFonts.lato(
-                    fontSize: 27.0,
-                    fontWeight: FontWeight.w300,
-                  ),
+                      fontSize: 27.0.sp,
+                      color: AppColors.textColor1,
+                      fontWeight: FontWeight.w300,
+                      decoration: TextDecoration.underline),
                 ),
               ),
               SizedBox(
                 height: 5 * SizeConfig.heightMultiplier!,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Hindi:',
-                    style: GoogleFonts.lato(
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  // IconButton(
-                  //     onPressed: () {
-                  //       if (state.speakingEnglish) {
-                  //       } else if (state.speakingHindi) {
-                  //         ref.read(textToSpeechProvider.notifier).stop();
-                  //       } else {
-                  //         ref.read(textToSpeechProvider.notifier).speakHindi(
-                  //               text: widget.hindiPara,
-                  //             );
-                  //       }
-                  //     },
-                  //     icon: state.speakingHindi
-                  //         ? const Icon(
-                  //             Icons.stop,
-                  //             color: Colors.red,
-                  //           )
-                  //         : const Icon(Icons.volume_up)),
-                ],
-              ),
-              SizedBox(
-                height: 4 * SizeConfig.heightMultiplier!,
-              ),
               Text(
                 widget.hindiPara,
                 style: GoogleFonts.lato(
-                  fontSize: 16.0,
+                  fontSize: 16.0.sp,
+                  color: AppColors.textColor1,
                   fontWeight: FontWeight.w300,
                 ),
                 textAlign: TextAlign.justify,

@@ -1,48 +1,64 @@
-import 'package:bhagwat_gita/config/responsive/size_config.dart';
+import 'package:bhagwat_gita/constants/app_colors.dart';
+import 'package:bhagwat_gita/features/verses/controller/verse_from_chapters_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CommentriesWidget extends StatelessWidget {
-  const CommentriesWidget({super.key, required this.authorName, required this.langauge, required this.description});
+  const CommentriesWidget(
+      {super.key, required this.authorName, required this.langauge, required this.description, required this.id});
   final String authorName;
   final String langauge;
   final String description;
+  final int id;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xfff4f1f8),
-      margin: EdgeInsets.symmetric(
-          horizontal: 10.0 * SizeConfig.widthMultiplier!, vertical: 6.0 * SizeConfig.heightMultiplier!),
+      color: AppColors.backgroundColor,
       child: Card(
-        elevation: 2.0,
-        color: const Color(0xfff4f1f8),
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: 20.0 * SizeConfig.widthMultiplier!, vertical: 10.0 * SizeConfig.heightMultiplier!),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                description,
-                style: GoogleFonts.lato(
-                  fontSize: 16.0 * SizeConfig.textMultiplier!,
-                  fontWeight: FontWeight.w500,
-                ),
+          color: AppColors.backgroundColor,
+          child: ListTile(
+            isThreeLine: true,
+            minVerticalPadding: 0,
+            titleAlignment: ListTileTitleAlignment.titleHeight,
+            horizontalTitleGap: 0,
+            leading: const Text("⚪"),
+            title: Text(
+              description.trim(),
+              style: GoogleFonts.lato(
+                fontSize: 16.0.sp,
+                color: AppColors.textColor1,
+                fontWeight: FontWeight.w500,
               ),
-              SizedBox(height: 10.0 * SizeConfig.heightMultiplier!),
-              Text(
-                'Comment by $authorName ($langauge)',
-                style: GoogleFonts.lato(
-                  fontSize: 15.0 * SizeConfig.textMultiplier!,
-                  fontWeight: FontWeight.bold,
-                ),
+            ),
+            subtitle: Text(
+              'Comment by $authorName (${langauge.toLowerCase()})'.trim(),
+              style: GoogleFonts.lato(
+                fontSize: 12.sp,
+                color: AppColors.lightYellow,
+                fontWeight: FontWeight.w500,
               ),
-              SizedBox(height: 10.0 * SizeConfig.heightMultiplier!),
-            ],
-          ),
-        ),
-      ),
+            ),
+            trailing: Consumer(builder: (context, ref03, _) {
+              final verseState = ref03.watch(chapterVerseProvider);
+              final providerFun = ref03.read(chapterVerseProvider.notifier);
+              return InkWell(
+                onTap: verseState.isSpeaking && id == verseState.currentTTSIndex
+                    ? () {
+                        providerFun.stopSpeaking();
+                      }
+                    : () {
+                        providerFun.speakHindiTTS(description, id);
+                      },
+                child: Icon(
+                  verseState.isSpeaking && id == verseState.currentTTSIndex ? Icons.stop : Icons.volume_up,
+                  color: AppColors.textColor1,
+                ),
+              );
+            }),
+          )),
     );
   }
 }

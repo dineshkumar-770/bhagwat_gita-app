@@ -5,8 +5,57 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-final textToSpeechProvider =
-    StateNotifierProvider<TextToSpeechNotifier, TextToSpeechState>((ref) {
+class TextToSpeechService {
+  // Step 1: Private Constructor
+  TextToSpeechService._privateConstructor();
+
+  // Step 2: The Singleton Instance
+  static final TextToSpeechService _instance = TextToSpeechService._privateConstructor();
+
+  // Step 3: Public Getter to Access the Singleton Instance
+  static TextToSpeechService get instance => _instance;
+
+  final FlutterTts _flutterTts = FlutterTts();
+
+  // Future<void> speak(String text, {String language = 'en'}) async {
+  //   await _flutterTts.setLanguage(language);
+
+  //   // Set pitch and rate according to your preference
+  //   await _flutterTts.setPitch(1.0);
+  //   await _flutterTts.setSpeechRate(0.5);
+
+  //   await _flutterTts.speak(text);
+  // }
+
+  Future<void> speakHindi({required String text}) async {
+    final isAvailable = await _flutterTts.isLanguageAvailable('hi');
+    if (isAvailable == true) {
+      await _flutterTts.setLanguage(const Locale('hi').languageCode);
+      await _flutterTts.setPitch(1); // Lower pitch for deeper voice
+      await _flutterTts.setSpeechRate(0.4); // Slightly slower speech rate
+      await _flutterTts.setVolume(1.0);
+      await _flutterTts.speak(text);
+      await _flutterTts.awaitSpeakCompletion(true);
+    } else {
+      Fluttertoast.showToast(msg: 'Language module is NOT available on your phone!');
+    }
+  }
+
+  Future<void> speakEnglish({required String text}) async {
+    await _flutterTts.setLanguage('en');
+    await _flutterTts.setPitch(0.8); // Lower pitch for deeper voice
+    await _flutterTts.setSpeechRate(0.4); // Slightly slower speech rate
+    await _flutterTts.setVolume(1.0);
+    await _flutterTts.speak(text);
+    await _flutterTts.awaitSpeakCompletion(true);
+  }
+
+  Future<void> stop() async {
+    await _flutterTts.stop();
+  } 
+}
+
+final textToSpeechProvider = StateNotifierProvider<TextToSpeechNotifier, TextToSpeechState>((ref) {
   return TextToSpeechNotifier();
 });
 
@@ -27,8 +76,7 @@ class TextToSpeechNotifier extends StateNotifier<TextToSpeechState> {
       await flutterTts.awaitSpeakCompletion(true);
       state = state.copyWith(speakingHindi: false, speakingEnglish: false);
     } else {
-      Fluttertoast.showToast(
-          msg: 'Language module is available on your phone!');
+      Fluttertoast.showToast(msg: 'Language module is NOT available on your phone!');
     }
   }
 
@@ -48,7 +96,6 @@ class TextToSpeechNotifier extends StateNotifier<TextToSpeechState> {
     flutterTts.stop();
     state = state.copyWith(speakingEnglish: false, speakingHindi: false);
   }
-
 }
 
 class TextToSpeechState extends Equatable {
@@ -60,8 +107,7 @@ class TextToSpeechState extends Equatable {
   });
 
   factory TextToSpeechState.init() {
-    return const TextToSpeechState(
-        speakingEnglish: false, speakingHindi: false);
+    return const TextToSpeechState(speakingEnglish: false, speakingHindi: false);
   }
 
   @override
