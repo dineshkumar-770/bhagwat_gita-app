@@ -58,28 +58,28 @@ class MyApp extends ConsumerWidget {
                         ),
                       ),
                       body: const HomePage(),
-                      bottomNavigationBar: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Made with ❤️",
-                            style: TextStyle(color: AppColors.textColor1),
-                          ),
-                          TextButton(
-                              onPressed: () async {
-                                try {
-                                  String endpoint = "upi://pay?pa=kumardinesh0699-1@okhdfcbank&pn=Dinesh&tn=Buy_me_coffee";
-                                  Uri url = Uri.parse(endpoint);
-                                  if (!await launchUrl(url)) {
-                                    throw Exception('Could not launch $url');
-                                  }
-                                } catch (e) {
-                                  log(e.toString());
-                                }
-                              },
-                              child: const Text("Buy me a Coffee?")),
-                        ],
-                      ),
+                      // bottomNavigationBar: Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Text(
+                      //       "Made with ❤️",
+                      //       style: TextStyle(color: AppColors.textColor1),
+                      //     ),
+                      //     TextButton(
+                      //         onPressed: () async {
+                      //           try {
+                      //             String endpoint = "upi://pay?pa=kumardinesh0699-1@okhdfcbank&pn=Dinesh&tn=Buy_me_coffee";
+                      //             Uri url = Uri.parse(endpoint);
+                      //             if (!await launchUrl(url)) {
+                      //               throw Exception('Could not launch $url');
+                      //             }
+                      //           } catch (e) {
+                      //             log(e.toString());
+                      //           }
+                      //         },
+                      //         child: const Text("Buy me a Coffee?")),
+                      //   ],
+                      // ),
                     ));
               },
             );
