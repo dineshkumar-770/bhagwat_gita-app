@@ -1,20 +1,26 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
-import 'package:bhagwat_gita/features/home/service/all_chapters_repo.dart';
-import 'package:equatable/equatable.dart';
-
+import 'package:bhagwat_gita/constants/constant_strings.dart';
+import 'package:bhagwat_gita/features/home/controller/all_chapters_state.dart';
 import 'package:bhagwat_gita/features/home/model/all_chapters_model.dart';
+import 'package:bhagwat_gita/features/home/service/all_chapters_repo.dart';
+import 'package:bhagwat_gita/utils/shared_prefs.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
-final allChaptersProvider =
-    StateNotifierProvider<AllChaptersNotifier, AllChapter>((ref) {
-  return AllChaptersNotifier(allChaptersService: AllChaptersService());
+final allChaptersProvider = StateNotifierProvider<AllChaptersNotifier, AllChaptersState>((ref) {
+  return AllChaptersNotifier(
+    allChaptersService: AllChaptersService(),
+  );
 });
 
-class AllChaptersNotifier extends StateNotifier<AllChapter> {
-  AllChaptersNotifier({required this.allChaptersService})
-      : super(AllChaptersInitialState()) {
+class AllChaptersNotifier extends StateNotifier<AllChaptersState> {
+  AllChaptersNotifier({
+    required this.allChaptersService,
+  }) : super(AllChaptersState.init()) {
+    initThemeColor();
+    getAppVersion();
     fetchAllChapters();
   }
 
@@ -22,46 +28,59 @@ class AllChaptersNotifier extends StateNotifier<AllChapter> {
 
   Future fetchAllChapters() async {
     try {
-      state = AllChaptersLoadingState();
-      List<AllChaptersModel> data = await allChaptersService.getAllChapters();
-      if (data.isNotEmpty) {
-        state = AllChaptersSuccessState(listOfAllChapters: data);
+      state = state.copyWith(allChaptersLoading: true, allChapterErrorMsg: "");
+      List<AllChaptersModel> response = await allChaptersService.getAllChapters();
+      if (response.isNotEmpty) {
+        state = state.copyWith(listOfAllChapters: response, allChapterErrorMsg: "", allChaptersLoading: false);
       } else {
-        state = AllChaptersErrorState(errorMessage: 'No Chapters found!');
+        state = state.copyWith(listOfAllChapters: [], allChaptersLoading: false, allChapterErrorMsg: "No Chapters found!");
       }
     } on SocketException catch (e) {
-      state = AllChaptersErrorState(
-          errorMessage: 'No Chapters found. Error: ${e.message}');
+      state = state.copyWith(
+          allChapterErrorMsg: 'No Chapters found. Error: ${e.message}', allChaptersLoading: false, listOfAllChapters: []);
     }
   }
-}
 
-abstract class AllChapter extends Equatable {}
+  void initThemeColor() {
+    final theme = Prefs.getString(ConstantStrings.color);
+    state = state.copyWith(selectedColorTheme: theme.isEmpty ? "Default" : theme);
+  }
 
-class AllChaptersLoadingState extends AllChapter {
-  @override
-  List<Object?> get props => [];
-}
+  void selectThemeColorName(String value) {
+    state = state.copyWith(selectedColorTheme: value.toString());
+  }
 
-class AllChaptersInitialState extends AllChapter {
-  @override
-  List<Object?> get props => [];
-}
+  Future<void> getAppVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    state = state.copyWith(packageInfo: packageInfo);
+  }
 
-class AllChaptersSuccessState extends AllChapter {
-  final List<AllChaptersModel> listOfAllChapters;
-  AllChaptersSuccessState({
-    required this.listOfAllChapters,
-  });
-  @override
-  List<Object?> get props => [];
-}
-
-class AllChaptersErrorState extends AllChapter {
-  final String errorMessage;
-  AllChaptersErrorState({
-    required this.errorMessage,
-  });
-  @override
-  List<Object?> get props => [];
+  void saveThemeData(String theme) async {
+    switch (theme) {
+      case ConstantStrings.softGreyBakcground:
+        await Prefs.setString(ConstantStrings.color, ConstantStrings.softGreyBakcground);
+        break;
+      case ConstantStrings.sepiaBackground:
+        await Prefs.setString(ConstantStrings.color, ConstantStrings.sepiaBackground);
+        break;
+      case ConstantStrings.defaultBakcground:
+        await Prefs.setString(ConstantStrings.color, ConstantStrings.defaultBakcground);
+        break;
+      case ConstantStrings.darkModeBlackBakcground:
+        await Prefs.setString(ConstantStrings.color, ConstantStrings.darkModeBlackBakcground);
+        break;
+      case ConstantStrings.creamyTintYellowBakcground:
+        await Prefs.setString(ConstantStrings.color, ConstantStrings.creamyTintYellowBakcground);
+        break;
+      case ConstantStrings.brightWhiteBakcground:
+        await Prefs.setString(ConstantStrings.color, ConstantStrings.brightWhiteBakcground);
+        break;
+      case ConstantStrings.blueGreyBackground:
+        await Prefs.setString(ConstantStrings.color, ConstantStrings.blueGreyBackground);
+        break;
+      default:
+        await Prefs.setString(ConstantStrings.color, ConstantStrings.defaultBakcground);
+        ConstantStrings.defaultBakcground;
+    }
+  }
 }
