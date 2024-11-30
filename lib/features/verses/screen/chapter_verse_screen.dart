@@ -10,7 +10,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:page_flip/page_flip.dart';
 
 class ChapterVerseScreen extends StatefulWidget {
   const ChapterVerseScreen({super.key, required this.chapterNumber});
@@ -21,7 +20,7 @@ class ChapterVerseScreen extends StatefulWidget {
 }
 
 class _ChapterVerseScreenState extends State<ChapterVerseScreen> {
-  final _controller = GlobalKey<PageFlipWidgetState>();
+  // final _controller = GlobalKey<PageFlipWidgetState>();
   Future _showPopupMenu({required Offset offset, required List<PopupMenuEntry<String>> items}) async {
     double left = offset.dx;
     double top = offset.dy;
