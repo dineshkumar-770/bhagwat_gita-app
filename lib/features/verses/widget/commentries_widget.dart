@@ -7,11 +7,17 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CommentriesWidget extends StatelessWidget {
   const CommentriesWidget(
-      {super.key, required this.authorName, required this.langauge, required this.description, required this.id});
+      {super.key,
+      required this.authorName,
+      required this.langauge,
+      required this.description,
+      required this.id,
+      required this.showCommentryAuthor});
   final String authorName;
   final String langauge;
   final String description;
   final int id;
+  final bool showCommentryAuthor;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,7 @@ class CommentriesWidget extends StatelessWidget {
       child: Card(
           color: AppColors.backgroundColor,
           child: ListTile(
-            isThreeLine: true,
+            isThreeLine: showCommentryAuthor,
             minVerticalPadding: 0,
             titleAlignment: ListTileTitleAlignment.titleHeight,
             horizontalTitleGap: 0,
@@ -33,14 +39,16 @@ class CommentriesWidget extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            subtitle: Text(
-              'Comment by $authorName (${langauge.toLowerCase()})'.trim(),
-              style: GoogleFonts.lato(
-                fontSize: 12.sp,
-                color: AppColors.lightYellow,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            subtitle: showCommentryAuthor
+                ? Text(
+                    'Comment by $authorName (${langauge.toLowerCase()})'.trim(),
+                    style: GoogleFonts.lato(
+                      fontSize: 12.sp,
+                      color: AppColors.lightYellow,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                : null,
             trailing: Consumer(builder: (context, ref03, _) {
               final verseState = ref03.watch(chapterVerseProvider);
               final providerFun = ref03.read(chapterVerseProvider.notifier);

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bhagwat_gita/features/verses/model/verse_from_chapter_model.dart';
 import 'package:bhagwat_gita/routes/api_routes.dart';
@@ -10,12 +11,11 @@ final verseRepositaryProvider = Provider<VerseRepositary>((ref) {
 });
 
 class VerseRepositary {
-  Future<List<VerseFromChapterModel>> fetchVersesChapterWise(
-      {required int chapterNumber}) async {
+  Future<List<VerseFromChapterModel>> fetchVersesChapterWise({required int chapterNumber}) async {
     String endpoints = '${ApiRoutes.baseURL}$chapterNumber/verses/';
     Uri url = Uri.parse(endpoints);
     http.Response response = await http.get(url, headers: ApiRoutes.apiHeaders);
-    if (response.statusCode == 200) {
+     if (response.statusCode == 200) {
       List<VerseFromChapterModel> verseList = [];
       final decodedData = jsonDecode(utf8.decode(response.bodyBytes));
       for (var element in decodedData) {

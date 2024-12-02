@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bhagwat_gita/constants/app_colors.dart';
+import 'package:bhagwat_gita/features/home/controller/all_chapter_controller.dart';
 import 'package:bhagwat_gita/features/verses/controller/verse_from_chapters_controller.dart';
 import 'package:bhagwat_gita/features/verses/screen/commentries_screen.dart';
 import 'package:bhagwat_gita/features/verses/widget/versse_widget.dart';
@@ -54,8 +55,8 @@ class _ChapterVerseScreenState extends State<ChapterVerseScreen> {
             final pageState = ref03.watch(chapterVerseProvider);
             return pageState.verseLoading
                 ? const SizedBox()
-                : TextButton(
-                    onPressed: () {
+                : InkWell(
+                    onTap: () {
                       _showPopupMenu(
                           offset: const Offset(12, -12),
                           items: List.generate(
@@ -63,9 +64,7 @@ class _ChapterVerseScreenState extends State<ChapterVerseScreen> {
                             (index) => PopupMenuItem<String>(
                                 onTap: () {
                                   log("Selected Verse Value: ${index + 1}");
-                                  // if (_controller.currentContext?.mounted ?? false) {
-
-                                  // }
+                                  ref03.read(chapterVerseProvider.notifier).updateVerseNumber((index + 1).toString());
                                   pageController.animateToPage(index,
                                       duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
                                 },
@@ -73,8 +72,39 @@ class _ChapterVerseScreenState extends State<ChapterVerseScreen> {
                                 child: Text('Verse ${index + 1}')),
                           ));
                     },
-                    child: const Text("Jump to Verse"));
-          })
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          " ${pageState.selectedVerseNumber} ",
+                          style: GoogleFonts.lato(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textColor1,
+                            fontSize: 24,
+                            // decoration: TextDecoration.underline,
+                          ),
+                        ),
+                        Icon(
+                          Icons.arrow_drop_down_circle,
+                          color: AppColors.textColor1,
+                        ),
+                      ],
+                    ),
+                  );
+          }),
+          VerticalDivider(
+            color: AppColors.textColor1,
+            endIndent: 15,
+            indent: 15,
+            thickness: 2,
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.bookmark,
+              color: AppColors.textColor1,
+            ),
+            onPressed: () {},
+          )
         ],
       ),
       body: SafeArea(
@@ -104,6 +134,10 @@ class _ChapterVerseScreenState extends State<ChapterVerseScreen> {
                       onSpeak: () {},
                       isSpeaking: verseState.isSpeaking,
                       onCommentries: () {
+                        ref02.read(chapterVerseProvider.notifier).filterCommentries(
+                              filterValue: verseState.chapterVerseList[index].commentaries[0].authorName.name,
+                              listOfCommentories: verseState.chapterVerseList[index].commentaries,
+                            );
                         Navigator.push(
                             context,
                             CupertinoPageRoute(

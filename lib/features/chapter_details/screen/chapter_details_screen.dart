@@ -49,13 +49,13 @@ class _ChaptersDetailsScreenState extends ConsumerState<ChaptersDetailsScreen> {
           },
           icon: Icon(
             Icons.book,
-            color: AppColors.textColor1,
+            color: AppColors.white,
           ),
           label: Text(
             "Read Verse",
             style: GoogleFonts.lato(
               fontSize: 14.0.sp,
-              color: AppColors.textColor1,
+              color: AppColors.white,
               fontWeight: FontWeight.w600,
             ),
           ),

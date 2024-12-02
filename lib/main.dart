@@ -1,13 +1,9 @@
-import 'dart:developer';
-import 'dart:ui';
-
 import 'package:bhagwat_gita/config/responsive/size_config.dart';
 import 'package:bhagwat_gita/features/home/screen/home_page.dart';
 import 'package:bhagwat_gita/utils/shared_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();

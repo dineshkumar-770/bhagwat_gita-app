@@ -68,11 +68,11 @@ class ShlokaCard extends StatelessWidget {
           onPressed: onCommentries,
           icon: Icon(
             Icons.logout,
-            color: AppColors.textColor1,
+            color: AppColors.white,
           ),
           label: Text(
             'Go to Commentries',
-            style: TextStyle(color: AppColors.textColor1),
+            style: TextStyle(color: AppColors.white),
           ),
         ),
       ),
@@ -142,8 +142,8 @@ class ShlokaCard extends StatelessWidget {
                             }),
                             subtitle: Text(
                               'Translated by ${translation.authorName.name.replaceAll(RegExp(r'_'), ' ')} (${translation.language.name.toLowerCase()}) ',
-                              style:
-                                  GoogleFonts.lato(fontSize: 10.0.sp, fontWeight: FontWeight.w500, color: AppColors.lightYellow),
+                              style: GoogleFonts.lato(
+                                  fontSize: 10.0.sp, fontWeight: FontWeight.w500, color: AppColors.lightYellow),
                             ),
                           ))
                       .toList(),

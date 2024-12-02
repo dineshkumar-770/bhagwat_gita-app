@@ -9,6 +9,11 @@ class ChapterVerseState extends Equatable {
   final bool isSpeaking;
   final bool verseLoading;
   final int currentTTSIndex;
+  final List<Commentary> listOfAllCommentriesInAChapter;
+  final List<Commentary> filteredChapterWiseCommentries;
+  final List<String> listOfAuthersOfCommentries;
+  final String selectedAuthor;
+  final String selectedVerseNumber;
 
   const ChapterVerseState({
     required this.errorMessage,
@@ -16,13 +21,40 @@ class ChapterVerseState extends Equatable {
     required this.isSpeaking,
     required this.verseLoading,
     required this.currentTTSIndex,
+    required this.listOfAllCommentriesInAChapter,
+    required this.filteredChapterWiseCommentries,
+    required this.listOfAuthersOfCommentries,
+    required this.selectedAuthor,
+    required this.selectedVerseNumber,
   });
 
-  factory ChapterVerseState.init() =>
-      const ChapterVerseState(chapterVerseList: [], currentTTSIndex: 0, errorMessage: "", isSpeaking: false, verseLoading: false);
+  factory ChapterVerseState.init() => const ChapterVerseState(
+      chapterVerseList: [],
+      currentTTSIndex: 0,
+      errorMessage: "",
+      filteredChapterWiseCommentries: [],
+      selectedVerseNumber: "1",
+      isSpeaking: false,
+      verseLoading: false,
+      listOfAllCommentriesInAChapter: [],
+      listOfAuthersOfCommentries: [],
+      selectedAuthor: "");
 
   @override
-  List<Object> get props => [errorMessage, chapterVerseList, isSpeaking, verseLoading, currentTTSIndex];
+  List<Object> get props {
+    return [
+      errorMessage,
+      chapterVerseList,
+      isSpeaking,
+      verseLoading,
+      currentTTSIndex,
+      listOfAllCommentriesInAChapter,
+      filteredChapterWiseCommentries,
+      listOfAuthersOfCommentries,
+      selectedAuthor,
+      selectedVerseNumber,
+    ];
+  }
 
   ChapterVerseState copyWith({
     String? errorMessage,
@@ -30,6 +62,11 @@ class ChapterVerseState extends Equatable {
     bool? isSpeaking,
     bool? verseLoading,
     int? currentTTSIndex,
+    List<Commentary>? listOfAllCommentriesInAChapter,
+    List<Commentary>? filteredChapterWiseCommentries,
+    List<String>? listOfAuthersOfCommentries,
+    String? selectedAuthor,
+    String? selectedVerseNumber,
   }) {
     return ChapterVerseState(
       errorMessage: errorMessage ?? this.errorMessage,
@@ -37,46 +74,11 @@ class ChapterVerseState extends Equatable {
       isSpeaking: isSpeaking ?? this.isSpeaking,
       verseLoading: verseLoading ?? this.verseLoading,
       currentTTSIndex: currentTTSIndex ?? this.currentTTSIndex,
+      listOfAllCommentriesInAChapter: listOfAllCommentriesInAChapter ?? this.listOfAllCommentriesInAChapter,
+      filteredChapterWiseCommentries: filteredChapterWiseCommentries ?? this.filteredChapterWiseCommentries,
+      listOfAuthersOfCommentries: listOfAuthersOfCommentries ?? this.listOfAuthersOfCommentries,
+      selectedAuthor: selectedAuthor ?? this.selectedAuthor,
+      selectedVerseNumber: selectedVerseNumber ?? this.selectedVerseNumber,
     );
   }
 }
-
-// class ChapterVerseState extends Equatable {
-//   @override
-//   List<Object?> get props => [];
-// }
-
-// class ChapterVerseLoadingState extends ChapterVerseState {}
-
-// class ChapterVerseInitialState extends ChapterVerseState {}
-
-// class ChapterVerseErrorState extends ChapterVerseState {
-//   final String errorMessage;
-//   ChapterVerseErrorState({
-//     required this.errorMessage,
-//   });
-//   @override
-//   List<Object?> get props => [errorMessage];
-// }
-
-// class ChapterVerseSuccessState extends ChapterVerseState {
-//   final List<VerseFromChapterModel> chapterVerseList;
-//   final bool isSpeaking;
-//   ChapterVerseSuccessState({
-//     required this.chapterVerseList,
-//     required this.isSpeaking,
-//   });
-
-//   @override
-//   List<Object?> get props => [chapterVerseList, isSpeaking];
-
-//   ChapterVerseSuccessState copyWith({
-//     List<VerseFromChapterModel>? chapterVerseList,
-//     bool? isSpeaking,
-//   }) {
-//     return ChapterVerseSuccessState(
-//       chapterVerseList: chapterVerseList ?? this.chapterVerseList,
-//       isSpeaking: isSpeaking ?? this.isSpeaking,
-//     );
-//   }
-// }
