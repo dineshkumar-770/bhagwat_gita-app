@@ -45,17 +45,34 @@ class ChapterVerseNotifier extends StateNotifier<ChapterVerseState> {
     }
 
     log(listOfAllCommentriesInThisChapter.length.toString());
-
+    final authorsList = listOfAllAuthers.toSet().toList();
     state = state.copyWith(
         listOfAllCommentriesInAChapter: listOfAllCommentriesInThisChapter,
-        listOfAuthersOfCommentries: listOfAllAuthers);
+        listOfAuthersOfCommentries: authorsList,
+        listOfAllAuthorsOfCommentries: authorsList);
+    log(state.listOfAllAuthorsOfCommentries.toString());
+  }
+
+  void filterAllCommentriesOfChapter(String authorName) {
+    List<Commentary> listAllCommentries = List.from(state.listOfAllCommentriesInAChapter);
+    List<Commentary> filteredList = [];
+    for (int i = 0; i < listAllCommentries.length; i++) {
+      if (listAllCommentries[i].authorName.name.contains(authorName)) {
+        filteredList.add(listAllCommentries[i]);
+      }
+    }
+    state = state.copyWith(filteredListOfAllCommentriesInAChapter: filteredList);
+  }
+
+  void selectAllCommentriesAuthor(String value) {
+    state = state.copyWith(selectedAllCommentriesAuthor: value);
   }
 
   void selecteAuthor(String value) {
     state = state.copyWith(selectedAuthor: value);
   }
 
-  void updateVerseNumber(String index){
+  void updateVerseNumber(String index) {
     state = state.copyWith(selectedVerseNumber: index);
   }
 

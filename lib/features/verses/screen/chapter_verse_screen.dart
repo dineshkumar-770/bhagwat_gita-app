@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:bhagwat_gita/constants/app_colors.dart';
-import 'package:bhagwat_gita/features/home/controller/all_chapter_controller.dart';
 import 'package:bhagwat_gita/features/verses/controller/verse_from_chapters_controller.dart';
+import 'package:bhagwat_gita/features/verses/screen/all_commentries_of_chapter_screen.dart';
 import 'package:bhagwat_gita/features/verses/screen/commentries_screen.dart';
 import 'package:bhagwat_gita/features/verses/widget/versse_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -133,6 +133,15 @@ class _ChapterVerseScreenState extends State<ChapterVerseScreen> {
                       serialNumber: index + 1,
                       onSpeak: () {},
                       isSpeaking: verseState.isSpeaking,
+                      onAllCommentries: () {
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => AllCommentriesOfChapterScreen(
+                                chapterNumber: widget.chapterNumber.toString(),
+                              ),
+                            ));
+                      },
                       onCommentries: () {
                         ref02.read(chapterVerseProvider.notifier).filterCommentries(
                               filterValue: verseState.chapterVerseList[index].commentaries[0].authorName.name,
@@ -151,30 +160,6 @@ class _ChapterVerseScreenState extends State<ChapterVerseScreen> {
                     );
                   },
                 );
-                // PageFlipWidget(
-                //     key: _controller,
-                //     cutoffForward: 1,
-                //     backgroundColor: AppColors.backgroundColor,
-                //     duration: const Duration(milliseconds: 700),
-                //     lastPage: Container(color: Colors.white, child: const Center(child: Text('Last Page!'))),
-                //     children: List.generate(
-                //         verseState.chapterVerseList.length,
-                //         (index) => ShlokaCard(
-                //               serialNumber: index + 1,
-                //               onSpeak: () {},
-                //               isSpeaking: verseState.isSpeaking,
-                //               onCommentries: () {
-                //                 Navigator.push(
-                //                     context,
-                //                     CupertinoPageRoute(
-                //                       builder: (context) => CommentriesScreen(
-                //                           listOfCommentary: verseState.chapterVerseList[index].commentaries,
-                //                           chapterNumber: widget.chapterNumber),
-                //                     ));
-                //               },
-                //               shloka: verseState.chapterVerseList[index].text.toString(),
-                //               translations: verseState.chapterVerseList[index].translations,
-                //             )));
               }
             }
           },

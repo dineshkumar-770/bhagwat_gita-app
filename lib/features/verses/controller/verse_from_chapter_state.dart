@@ -10,10 +10,13 @@ class ChapterVerseState extends Equatable {
   final bool verseLoading;
   final int currentTTSIndex;
   final List<Commentary> listOfAllCommentriesInAChapter;
+  final List<Commentary> filteredListOfAllCommentriesInAChapter;
+  final List<String> listOfAllAuthorsOfCommentries;
   final List<Commentary> filteredChapterWiseCommentries;
   final List<String> listOfAuthersOfCommentries;
   final String selectedAuthor;
   final String selectedVerseNumber;
+  final String selectedAllCommentriesAuthor;
 
   const ChapterVerseState({
     required this.errorMessage,
@@ -22,10 +25,13 @@ class ChapterVerseState extends Equatable {
     required this.verseLoading,
     required this.currentTTSIndex,
     required this.listOfAllCommentriesInAChapter,
+    required this.filteredListOfAllCommentriesInAChapter,
+    required this.listOfAllAuthorsOfCommentries,
     required this.filteredChapterWiseCommentries,
     required this.listOfAuthersOfCommentries,
     required this.selectedAuthor,
     required this.selectedVerseNumber,
+    required this.selectedAllCommentriesAuthor,
   });
 
   factory ChapterVerseState.init() => const ChapterVerseState(
@@ -34,7 +40,10 @@ class ChapterVerseState extends Equatable {
       errorMessage: "",
       filteredChapterWiseCommentries: [],
       selectedVerseNumber: "1",
+      filteredListOfAllCommentriesInAChapter: [],
+      selectedAllCommentriesAuthor: "",
       isSpeaking: false,
+      listOfAllAuthorsOfCommentries: [],
       verseLoading: false,
       listOfAllCommentriesInAChapter: [],
       listOfAuthersOfCommentries: [],
@@ -49,10 +58,13 @@ class ChapterVerseState extends Equatable {
       verseLoading,
       currentTTSIndex,
       listOfAllCommentriesInAChapter,
+      filteredListOfAllCommentriesInAChapter,
+      listOfAllAuthorsOfCommentries,
       filteredChapterWiseCommentries,
       listOfAuthersOfCommentries,
       selectedAuthor,
       selectedVerseNumber,
+      selectedAllCommentriesAuthor,
     ];
   }
 
@@ -63,10 +75,13 @@ class ChapterVerseState extends Equatable {
     bool? verseLoading,
     int? currentTTSIndex,
     List<Commentary>? listOfAllCommentriesInAChapter,
+    List<Commentary>? filteredListOfAllCommentriesInAChapter,
+    List<String>? listOfAllAuthorsOfCommentries,
     List<Commentary>? filteredChapterWiseCommentries,
     List<String>? listOfAuthersOfCommentries,
     String? selectedAuthor,
     String? selectedVerseNumber,
+    String? selectedAllCommentriesAuthor,
   }) {
     return ChapterVerseState(
       errorMessage: errorMessage ?? this.errorMessage,
@@ -75,10 +90,13 @@ class ChapterVerseState extends Equatable {
       verseLoading: verseLoading ?? this.verseLoading,
       currentTTSIndex: currentTTSIndex ?? this.currentTTSIndex,
       listOfAllCommentriesInAChapter: listOfAllCommentriesInAChapter ?? this.listOfAllCommentriesInAChapter,
+      filteredListOfAllCommentriesInAChapter: filteredListOfAllCommentriesInAChapter ?? this.filteredListOfAllCommentriesInAChapter,
+      listOfAllAuthorsOfCommentries: listOfAllAuthorsOfCommentries ?? this.listOfAllAuthorsOfCommentries,
       filteredChapterWiseCommentries: filteredChapterWiseCommentries ?? this.filteredChapterWiseCommentries,
       listOfAuthersOfCommentries: listOfAuthersOfCommentries ?? this.listOfAuthersOfCommentries,
       selectedAuthor: selectedAuthor ?? this.selectedAuthor,
       selectedVerseNumber: selectedVerseNumber ?? this.selectedVerseNumber,
+      selectedAllCommentriesAuthor: selectedAllCommentriesAuthor ?? this.selectedAllCommentriesAuthor,
     );
   }
 }

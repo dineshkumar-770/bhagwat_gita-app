@@ -15,8 +15,9 @@ class AllChaptersService {
       http.Response response =
           await http.get(url, headers: ApiRoutes.apiHeaders);
       if (response.statusCode == 200) {
+        final decodedData = utf8.decode(response.bodyBytes);
         List<AllChaptersModel> data =
-            allChaptersModelFromJson(utf8.decode(response.bodyBytes));
+            allChaptersModelFromJson(decodedData);
         return data;
       } else {
         return [];

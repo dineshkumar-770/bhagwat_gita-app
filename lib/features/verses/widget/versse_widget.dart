@@ -12,7 +12,9 @@ class ShlokaCard extends StatelessWidget {
   final List<Commentary> translations;
   final void Function()? onCommentries;
   final void Function()? onSpeak;
+  final void Function()? onAllCommentries;
   final bool isSpeaking;
+
 
   const ShlokaCard(
       {super.key,
@@ -21,6 +23,7 @@ class ShlokaCard extends StatelessWidget {
       required this.translations,
       required this.isSpeaking,
       this.onCommentries,
+      this.onAllCommentries,
       this.onSpeak});
 
   @override
@@ -62,20 +65,47 @@ class ShlokaCard extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
-        child: ElevatedButton.icon(
-          style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(AppColors.primaryButtonColor)),
-          onPressed: onCommentries,
-          icon: Icon(
-            Icons.logout,
-            color: AppColors.white,
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.0.w,
           ),
-          label: Text(
-            'Go to Commentries',
-            style: TextStyle(color: AppColors.white),
-          ),
-        ),
-      ),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: ElevatedButton.icon(
+                  style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(AppColors.primaryButtonColor)),
+                  onPressed: onCommentries,
+                  icon: Icon(
+                    Icons.logout,
+                    color: AppColors.white,
+                    size: 20,
+                  ),
+                  label: Text(
+                    'Go to Commentries',
+                    style: TextStyle(color: AppColors.white, fontSize: 12),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 5.w,
+              ),
+              Expanded(
+                flex: 1,
+                child: ElevatedButton.icon(
+                  style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(AppColors.primaryButtonColor)),
+                  onPressed: onAllCommentries,
+                  icon: Icon(
+                    Icons.read_more,
+                    color: AppColors.white,
+                  ),
+                  label: Text(
+                    'All Commentries',
+                    style: TextStyle(color: AppColors.white, fontSize: 12),
+                  ),
+                ),
+              ),
+            ],
+          )),
       body: Container(
         color: AppColors.backgroundColor,
         child: Card(

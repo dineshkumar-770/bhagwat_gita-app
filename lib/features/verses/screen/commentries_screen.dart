@@ -100,24 +100,7 @@ class _CommentriesScreenState extends State<CommentriesScreen> with TickerProvid
             ],
           ))
         ],
-      ),
-      // Column(
-      //   children: [
-      //     Expanded(
-      //         child: ListView.builder(
-      //       itemCount: listOfCommentary.length,
-      //       itemBuilder: (context, index) {
-      //         return CommentriesWidget(
-      //           id:listOfCommentary[index].id ,
-      //           authorName: listOfCommentary[index].authorName.name.replaceAll(RegExp(r'_'), ' '),
-      //           description: listOfCommentary[index].description,
-      //           langauge: listOfCommentary[index].language.name,
-      //         );
-      //         // Text(listOfCommentary[index].description);
-      //       },
-      //     ))
-      //   ],
-      // ),
+      ), 
     );
   }
 }

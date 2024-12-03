@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bhagwat_gita/features/verses/model/verse_from_chapter_model.dart';
 import 'package:bhagwat_gita/routes/api_routes.dart';
