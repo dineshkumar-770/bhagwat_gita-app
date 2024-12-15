@@ -44,7 +44,7 @@ class BhagavadGitaChaptersCard extends StatelessWidget {
                   Expanded(
                     child: GridView.builder(
                       physics: const BouncingScrollPhysics(),
-                      itemCount: 18,
+                      itemCount: state.listOfAllChapters.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: _getCrossAxisCount(context),
                         crossAxisSpacing: 16.0,
@@ -60,28 +60,28 @@ class BhagavadGitaChaptersCard extends StatelessWidget {
                                 .fetchAllChapters();
                             _showChapterSummaryDialog(
                                 chapterSummaryEnglish:
-                                    (state is AllChaptersLoadingState)
+                                    state.allChaptersLoading
                                         ? 'Loading...'
-                                        : (state is AllChaptersErrorState)
-                                            ? state.errorMessage
-                                            : (state is AllChaptersSuccessState)
+                                        : state.allChapterErrorMsg.isNotEmpty
+                                            ? state.allChapterErrorMsg
+                                            : state.listOfAllChapters.isNotEmpty
                                                 ? state.listOfAllChapters[index]
                                                     .chapterSummary
                                                 : '',
                                 chapterSummaryHindi:
-                                    (state is AllChaptersLoadingState)
+                                    state.allChaptersLoading
                                         ? 'Loading...'
-                                        : (state is AllChaptersErrorState)
-                                            ? state.errorMessage
-                                            : (state is AllChaptersSuccessState)
+                                        : state.allChapterErrorMsg.isNotEmpty
+                                            ? state.allChapterErrorMsg
+                                            : state.listOfAllChapters.isNotEmpty
                                                 ? state.listOfAllChapters[index]
                                                     .chapterSummaryHindi
                                                 : '',
-                                chapterTitle: (state is AllChaptersLoadingState)
+                                chapterTitle: state.allChaptersLoading
                                     ? 'Loading...'
-                                    : (state is AllChaptersErrorState)
-                                        ? state.errorMessage
-                                        : (state is AllChaptersSuccessState)
+                                    : state.allChapterErrorMsg.isNotEmpty
+                                        ? state.allChapterErrorMsg
+                                        : state.listOfAllChapters.isNotEmpty
                                             ? state.listOfAllChapters[index]
                                                 .nameMeaning
                                             : '',
